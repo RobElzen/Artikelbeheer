@@ -67,19 +67,17 @@ SpeedOn
         If Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value <> "" And _
           (statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_64 Or _
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67) Then                  ''"ACC_inleveren" of "ACC_afgewezen"
-           
-           IF Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value = "JA" AND _THEN
-              statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_79
-      ELSEIF  statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67 THEN
-              statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_77   
-           
-           
-           statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_70                        ''"OUT_IN"
-        'Aanvraag_level_64 "ACC_inleveren"    of    Aanvraag_level_67 "ACC_afgewezen"
-
-       
-        
-
+          'statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_70                        ''"OUT_IN"
+          'Aanvraag_level_64 "ACC_inleveren"    of    Aanvraag_level_67 "ACC_afgewezen"
+                    
+                    IF Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value = "JA" AND _
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_64 THEN
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_70
+                ELSEIF Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value = "NEE" OR _
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67 THEN
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_77   
+                END IF  
+                    
            Range("ACC_Datum_OUT_ACC").Cells(rCell.Row - HeadingRows, 1).Value = Now()               ''ACC_Datum_IN_ACC
            Range("ACC_Generator").Cells(rCell.Row - HeadingRows, 1).Value = Naam
            Range("ACC_Datum_IN_OUT").Cells(rCell.Row - HeadingRows, 1).Value = Now()                ''ACC_Datum_IN_ACC
@@ -96,7 +94,13 @@ SpeedOn
           CHECK_EMPTY_FLAG = False
           CHECK_CHAR_GESLAAGD:
           'Controle van velden is al gedaan
-           statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_69        ''"ACC_OUT"
+          
+                    IF statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_70 THEN
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_69        ''"ACC_OUT"
+                ELSEIF statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_77 THEN
+                       statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67        ''"ACC_AFGEWEZEN"   
+                END IF  
+          
           'Define OUT laast row
            mylastRow_OUT = mylastRow_OUT + 1
           CALL SpeedOff
@@ -122,13 +126,10 @@ COPY_END1:
 '    Workbooks("Artikelbeheer").Worksheets("OUT").Activate
 '    Workbooks("Artikelbeheer").Worksheets("OUT").Select
 '    ActiveWorkbook.Close savechanges:=True ''False
-'''''
 '    Dim Path
 '    Path = "http://dafshare-org.eu.paccar.com/organization/ops-mtc/Artikelaanvraag/"
 '   Workbooks("Artikelbeheer").Select
 '   check of die open is want dan kan je die sluiten
 '   ActiveWorkbook.Close ("http://dafshare-org.eu.paccar.com/organization/ops-mtc/Artikelaanvraag/Artikelbeheer.xlsm") ''savechanges:=True   ''False
-''''
-
 End Sub
 
