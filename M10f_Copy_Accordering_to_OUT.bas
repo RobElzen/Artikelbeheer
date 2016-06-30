@@ -61,54 +61,59 @@ Application.Run ("'Lijsten_new.xlsm'!Generate_Ranges_ALL")
 COPY_START:
 SpeedOn
     For Each rCell In statusRange.Cells
-    WB.Worksheets("Accordering").Activate
-    WB.Worksheets("Accordering").Select
-    statusRange(rCell.Row - HeadingRows, 1).Select
+        WB.Worksheets("Accordering").Activate
+        WB.Worksheets("Accordering").Select
+        statusRange(rCell.Row - HeadingRows, 1).Select
         If Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value <> "" And _
           (statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_64 Or _
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67) Then                  ''"ACC_inleveren" of "ACC_afgewezen"
+           
+           IF Range("ACC_Gereed_voor_Upload.SAP").Cells(rCell.Row - HeadingRows, 1).Value = "JA" AND _THEN
+              statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_79
+      ELSEIF  statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_67 THEN
+              statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_77   
+           
+           
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_70                        ''"OUT_IN"
+        'Aanvraag_level_64 "ACC_inleveren"    of    Aanvraag_level_67 "ACC_afgewezen"
+
+       
+        
+
            Range("ACC_Datum_OUT_ACC").Cells(rCell.Row - HeadingRows, 1).Value = Now()               ''ACC_Datum_IN_ACC
            Range("ACC_Generator").Cells(rCell.Row - HeadingRows, 1).Value = Naam
            Range("ACC_Datum_IN_OUT").Cells(rCell.Row - HeadingRows, 1).Value = Now()                ''ACC_Datum_IN_ACC
-''========================================================================''
+           ''========================================================================''
            Range(Cells(rCell.Row, 1), Cells(rCell.Row, HeaderNameColumn)).Select
            Range(Cells(rCell.Row, 1), Cells(rCell.Row, HeaderNameColumn)).COPY Destination:=Workbooks("Artikelbeheer").Worksheets("OUT").Cells(mylastRow_OUT + 1, 1)
-''========================================================================''
-CHECK_CHAR_START:   ''check aantal karakters als check aanwezig in kolom 3
-''''''''''''''
-    WB.Worksheets("Accordering").Activate
-    j = 0
-    Dim CHECK_CHAR_FLAG As Boolean
-    Dim CHECK_EMPTY_FLAG As Boolean
-    CHECK_CHAR_FLAG = False
-    CHECK_EMPTY_FLAG = False
-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-CHECK_CHAR_GESLAAGD:
-'          Controle van velden is al gedaan
+           ''========================================================================''
+          CHECK_CHAR_START:   ''check aantal karakters als check aanwezig in kolom 3
+          WB.Worksheets("Accordering").Activate    ''OVERBODIG
+          j = 0
+          Dim CHECK_CHAR_FLAG As Boolean
+          Dim CHECK_EMPTY_FLAG As Boolean
+          CHECK_CHAR_FLAG = False
+          CHECK_EMPTY_FLAG = False
+          CHECK_CHAR_GESLAAGD:
+          'Controle van velden is al gedaan
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_69        ''"ACC_OUT"
           'Define OUT laast row
            mylastRow_OUT = mylastRow_OUT + 1
-COPY:
-''''''''
-SpeedOff
-SpeedOn
-''''''''
+          CALL SpeedOff
+          CALL SpeedOn
         Else
         End If
-''========================================================================''
-CHECK_OVER:
-    rCell = (rCell.Row + 1)
-''SpeedOff
-Next rCell
-''===============================||====================================
+                 ''========================================================================''
+                           CHECK_OVER:
+      rCell = (rCell.Row + 1)
+    Next rCell
+    ''===============================||====================================
     WB.Worksheets("OUT").Activate
     Application.Run ("'Lijsten_new.xlsm'!Generate_Ranges_ALL")
     Application.Run ("'Lijsten_new.xlsm'!ProtectOn")
-''===============================||====================================
+    ''===============================||====================================
     Workbooks("Artikelbeheer").Worksheets("Accordering").Activate
-'    Workbooks("Artikelbeheer").Close savechanges:=True
+    'Workbooks("Artikelbeheer").Close savechanges:=True
 SpeedOff
 COPY_END:
     WB.Save
