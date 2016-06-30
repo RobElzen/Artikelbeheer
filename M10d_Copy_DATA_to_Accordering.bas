@@ -93,9 +93,9 @@ CHECK_START:
         'Selection.Cells.ClearContents
     
     For Each rCell In statusRange.Cells
-    Workbooks(Databestand_naam).Worksheets("Databestand").Activate
-    Workbooks(Databestand_naam).Worksheets("Databestand").Select
-    statusRange(rCell.Row - HeadingRows, 1).Select
+        Workbooks(Databestand_naam).Worksheets("Databestand").Activate
+        Workbooks(Databestand_naam).Worksheets("Databestand").Select
+        statusRange(rCell.Row - HeadingRows, 1).Select
         If statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_44 Then             ''"DB_inleveren"
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_60                  ''"AC_IN"
            Range("DB_Databeheerder").Cells(rCell.Row - HeadingRows, 1).Value = Naam
@@ -118,18 +118,18 @@ CHECK_START:
                     End If
                      
                      'Altijd laten berekenen?
-                     If Cells(rCell.Row, Range("DB_Brutto_Inkoopprijs").Column) <> "" Then
-                        Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) = Cells(rCell.Row, Range("DB_Brutto_Inkoopprijs").Column) * _
-                                                                                (100 - Cells(rCell.Row, Range("DB_Korting").Column)) / 100
-                     '  MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("DB_Netto_Inkoopprijs").Column).Value & " : " & Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column).value
-                     End If
+                    If Cells(rCell.Row, Range("DB_Brutto_Inkoopprijs").Column) <> "" Then
+                       Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) = Cells(rCell.Row, Range("DB_Brutto_Inkoopprijs").Column) * _
+                                                                               (100 - Cells(rCell.Row, Range("DB_Korting").Column)) / 100
+                       'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("DB_Netto_Inkoopprijs").Column).Value & " : " & Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column).value
+                    End If
                      
                      'Altijd laten berekenen?
-                     If Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) <> "" Then
-                        Cells(rCell.Row, Range("DB_Aanvraagbedrag").Column) = Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) * _
-                                                                              Cells(rCell.Row, Range("DB_Veiligheidsvoorraad.Bestelpunt").Column)
-                     '  MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("DB_Aanvraagbedrag").Column).Value & " : " & Cells(rCell.Row, Range("DB_Aanvraagbedrag").Column).value
-                     End If
+                    If Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) <> "" Then
+                       Cells(rCell.Row, Range("DB_Aanvraagbedrag").Column) = Cells(rCell.Row, Range("DB_Netto_Inkoopprijs").Column) * _
+                                                                             Cells(rCell.Row, Range("DB_Veiligheidsvoorraad.Bestelpunt").Column)
+                       'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("DB_Aanvraagbedrag").Column).Value & " : " & Cells(rCell.Row, Range("DB_Aanvraagbedrag").Column).value
+                    End If
                      
                      ''Aanvragernaam
                       Cells(rCell.Row, Range("DB_Aanvrager.Vestiging").Column) = Vestiging
@@ -138,27 +138,21 @@ CHECK_START:
                         CHECK_CHAR_START:   ''check aantal karakters als check aanwezig in kolom 3
                         '    Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Activate
                             j = 0
-                        '    Dim CHECK_CHAR_FLAG As Boolean
-                        '    Dim CHECK_EMPTY_FLAG As Boolean
-                        '    CHECK_CHAR_FLAG = False
-                        '    CHECK_EMPTY_FLAG = False
-                            
                             Dim CHECK_REQU_FLAG As Boolean
                             Dim CHECK_FORM_FLAG As Boolean
                             Dim CHECK_CHAR_FLAG As Boolean
+                           'Dim CHECK_EMPTY_FLAG As Boolean                            
                             CHECK_REQU_FLAG = False
                             CHECK_FORM_FLAG = False
                             CHECK_CHAR_FLAG = False
-                        ''========================================================================''
-                        ''========================================================================''
+                           'CHECK_EMPTY_FLAG = False 
                         ''========================================================================''
                         ''Check op lege cellen (+1   betekent incl. Heading) || Workbooks(Werkbestand_naam).Worksheets("Werkbestand").
-                            Dim requRange As Range       ''Column COL_REQUIRED
-                            Dim formRange As Range       ''Column COL_FORMAT
-                            Dim charRange As Range       ''Page COL_CHAR
-                            Dim ALL_Range As Range       ''Page RANGE_ALL
-                        ''===============================||====================================
-                        'SETTINGS CALL
+                            Dim requRange As Range
+                            Dim formRange As Range
+                            Dim charRange As Range
+                            Dim ALL_Range As Range
+
                             Set requRange = Workbooks("Lijsten_new").Worksheets("SETTINGS").Range("SET.COL_REQUIRED_DB")
                             Set formRange = Workbooks("Lijsten_new").Worksheets("SETTINGS").Range("SET.COL_FORMAT")
                             Set charRange = Workbooks("Lijsten_new").Worksheets("SETTINGS").Range("SET.COL_CHAR")
@@ -166,163 +160,161 @@ CHECK_START:
                         ''===============================||====================================
     For j = 1 To Workbooks(Databestand_naam).Worksheets("Databestand").Cells(1, 1).SpecialCells(xlLastCell).Column
 
-Dim HEAD_zoekwaarde As String
-HEAD_zoekwaarde = Cells(1, j)
-Dim hCell As Variant
-Dim Match_Check As Boolean
-Match_Check = False
-''Workbooks(Werkbestand_naam).Worksheets ("Werkbestand")
-
-''wbL.Activate
-For Each hCell In ALL_Range '.Cells
-If hCell.Value <> "" Then
-      If hCell.Value = HEAD_zoekwaarde Then
-'         Workbooks(Werkbestand_naam).Activate
-         Workbooks(Databestand_naam).Worksheets("Databestand").Cells(rCell.Row, j).Select
-         Match_Check = True
-''''''''''''
-COL_REQUIRED:
-         If requRange(hCell.Row - 1, 1).Value = "X" Then    ''Required field
-         
-'              Cells(rCell.Row, j).Select
-            If Selection = "" Then
-               'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
-               Selection.Interior.Color = vbYellow
-'              CHECK_EMPTY_FLAG = True
-               CHECK_REQU_FLAG = True
-               GoTo COL_CHAR
-            Else
-               Selection.Interior.Color = xlNone
-            End If
-         End If
-''''''''''''
-COL_FORMAT:
-         If formRange(hCell.Row - 1, 1).Value = "T" Then    ''Text
-            Selection.NumberFormat = "General"
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Cells(rCell.Row, j).NumberFormat = "General"
-         GoTo COL_CHAR
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "N" Then    ''Numeric
-         
-'               Cells(rCell.Row, j).Select
-            If Not IsNumeric(Selection) Then
-               'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
-               Selection.Interior.Color = vbRed
-               CHECK_FORM_FLAG = True
-            Else
-               If Selection.Interior.Color = vbYellow Then
-               CHECK_FORM_FLAG = True
-               Else
-                  Selection.Interior.Color = xlNone
-               End If
-            End If
-            
-            Selection.NumberFormat = "#0_ ;-#0 "
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
-         
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "N1" Then    ''Numeric
-         
-'               Cells(rCell.Row, j).Select
-            If Not IsNumeric(Selection) Then
-               'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
-               Selection.Interior.Color = vbRed
-               CHECK_FORM_FLAG = True
-            Else
-               If Selection.Interior.Color = vbYellow Then
-               CHECK_FORM_FLAG = True
-               Else
-                  Selection.Interior.Color = xlNone
-               End If
-            End If
-            
-            Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
-         
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "N2" Then    ''Numeric
-         
-'               Cells(rCell.Row, j).Select
-            If Not IsNumeric(Selection) Then
-               'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
-               Selection.Interior.Color = vbRed
-               CHECK_FORM_FLAG = True
-            Else
-               If Selection.Interior.Color = vbYellow Then
-               CHECK_FORM_FLAG = True
-               Else
-                  Selection.Interior.Color = xlNone
-               End If
-            End If
-            
-            Selection.NumberFormat = "#,##0.00_ ;-#,##0.00 "
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
-         
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "N3" Then    ''Numeric
-         
-'               Cells(rCell.Row, j).Select
-            If Not IsNumeric(Selection) Then
-               'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
-               Selection.Interior.Color = vbRed
-               CHECK_FORM_FLAG = True
-            Else
-               If Selection.Interior.Color = vbYellow Then
-               CHECK_FORM_FLAG = True
-               Else
-                  Selection.Interior.Color = xlNone
-               End If
-            End If
-            
-            Selection.NumberFormat = "#,###0.000_ ;-#,###0.000 "
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
-         
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "NE" Then    ''Numeric Exact
-         End If
-         
-         If formRange(hCell.Row - 1, 1).Value = "D" Then    ''Date time
-            Selection.NumberFormat = "[$-13]dd-mm-yyyy h:mm;@" ''Format(Date, "dd-mm-yyyy h:mm")
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "[$-13]dd-mm-yyyy;@" ''Format(Date, "dd-mm-yyyy")
-         GoTo COL_CHAR
-         End If
+        Dim HEAD_zoekwaarde As String
+        HEAD_zoekwaarde = Cells(1, j)
+        Dim hCell As Variant
+        Dim Match_Check As Boolean
+        Match_Check = False
         
-         If formRange(hCell.Row - 1, 1).Value = "V" Then    ''Valuta
-            Selection.NumberFormat = "* #,##0.00"
-'            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,##0.00"
-         GoTo COL_CHAR
-         End If
-''''''''''''
-COL_CHAR:
-         If charRange(hCell.Row - 1, 1).Value > 0 Then
-         
-            If Len(Cells(rCell.Row, j)) > charRange(hCell.Row - 1, 1).Value Then
-               Cells(rCell.Row, j).Select
-               Selection.Interior.Color = vbRed
-               CHECK_CHAR_FLAG = True
-'               MsgBox "Er zijn te lange teksten aanwezig. Svp. aanpassen."
-            Else
-'               Cells(rCell.Row, j).Select
-               If Selection.Interior.Color = vbYellow Then
-                  CHECK_CHAR_FLAG = True
-               Cells(3, j) = Len(Cells(rCell.Row, j))
-               Else
-                  Selection.Interior.Color = xlNone
-               End If
-            End If
-            
-'            Cells(3, j) = Cells(3, j) & vbNewLine & "{RIJ " & rCell.Row & " } " & "Geteld: " & Len(Cells(rCell.Row, j)) & " (Toegestaan: " & charRange(hCell.Row - 1, 1).Value & " ) "
-'            Cells(3, j) = Cells(3, j) & vbNewLine & "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
-            Test_Col_Char = Cells(3, j) & "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
-            Cells(3, j) = Test_Col_Char & vbNewLine ''& "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
-         End If
-''''''''''''
-'''''''''
+        For Each hCell In ALL_Range '.Cells
+        If hCell.Value <> "" Then
+              If hCell.Value = HEAD_zoekwaarde Then
+        '         Workbooks(Werkbestand_naam).Activate
+                 Workbooks(Databestand_naam).Worksheets("Databestand").Cells(rCell.Row, j).Select
+                 Match_Check = True
+            ''''''''''''
+            COL_REQUIRED:
+                     If requRange(hCell.Row - 1, 1).Value = "X" Then    ''Required field
+                     
+            '              Cells(rCell.Row, j).Select
+                        If Selection = "" Then
+                           'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
+                           Selection.Interior.Color = vbYellow
+            '              CHECK_EMPTY_FLAG = True
+                           CHECK_REQU_FLAG = True
+                           GoTo COL_CHAR
+                        Else
+                           Selection.Interior.Color = xlNone
+                        End If
+                     End If
+            ''''''''''''
+            COL_FORMAT:
+                     If formRange(hCell.Row - 1, 1).Value = "T" Then    ''Text
+                        Selection.NumberFormat = "General"
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Cells(rCell.Row, j).NumberFormat = "General"
+                     GoTo COL_CHAR
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "N" Then    ''Numeric
+                     
+            '               Cells(rCell.Row, j).Select
+                        If Not IsNumeric(Selection) Then
+                           'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
+                           Selection.Interior.Color = vbRed
+                           CHECK_FORM_FLAG = True
+                        Else
+                           If Selection.Interior.Color = vbYellow Then
+                           CHECK_FORM_FLAG = True
+                           Else
+                              Selection.Interior.Color = xlNone
+                           End If
+                        End If
+                        
+                        Selection.NumberFormat = "#0_ ;-#0 "
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
+                     
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "N1" Then    ''Numeric
+                     
+            '               Cells(rCell.Row, j).Select
+                        If Not IsNumeric(Selection) Then
+                           'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
+                           Selection.Interior.Color = vbRed
+                           CHECK_FORM_FLAG = True
+                        Else
+                           If Selection.Interior.Color = vbYellow Then
+                           CHECK_FORM_FLAG = True
+                           Else
+                              Selection.Interior.Color = xlNone
+                           End If
+                        End If
+                        
+                        Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
+                     
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "N2" Then    ''Numeric
+                     
+            '               Cells(rCell.Row, j).Select
+                        If Not IsNumeric(Selection) Then
+                           'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
+                           Selection.Interior.Color = vbRed
+                           CHECK_FORM_FLAG = True
+                        Else
+                           If Selection.Interior.Color = vbYellow Then
+                           CHECK_FORM_FLAG = True
+                           Else
+                              Selection.Interior.Color = xlNone
+                           End If
+                        End If
+                        
+                        Selection.NumberFormat = "#,##0.00_ ;-#,##0.00 "
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
+                     
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "N3" Then    ''Numeric
+                     
+            '               Cells(rCell.Row, j).Select
+                        If Not IsNumeric(Selection) Then
+                           'MsgBox "Het werkt" & " : " & Cells(rCell.Row - HeadingRows, Range("WB_Type").Column).Value & " : " & "  Offerte door DataBeheerder laten aanvragen"
+                           Selection.Interior.Color = vbRed
+                           CHECK_FORM_FLAG = True
+                        Else
+                           If Selection.Interior.Color = vbYellow Then
+                           CHECK_FORM_FLAG = True
+                           Else
+                              Selection.Interior.Color = xlNone
+                           End If
+                        End If
+                        
+                        Selection.NumberFormat = "#,###0.000_ ;-#,###0.000 "
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,#0.0_ ;-#,#0.0 "
+                     
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "NE" Then    ''Numeric Exact
+                     End If
+                     
+                     If formRange(hCell.Row - 1, 1).Value = "D" Then    ''Date time
+                        Selection.NumberFormat = "[$-13]dd-mm-yyyy h:mm;@" ''Format(Date, "dd-mm-yyyy h:mm")
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "[$-13]dd-mm-yyyy;@" ''Format(Date, "dd-mm-yyyy")
+                     GoTo COL_CHAR
+                     End If
+                    
+                     If formRange(hCell.Row - 1, 1).Value = "V" Then    ''Valuta
+                        Selection.NumberFormat = "* #,##0.00"
+            '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,##0.00"
+                     GoTo COL_CHAR
+                     End If
+            ''''''''''''
+            COL_CHAR:
+                     If charRange(hCell.Row - 1, 1).Value > 0 Then
+                     
+                        If Len(Cells(rCell.Row, j)) > charRange(hCell.Row - 1, 1).Value Then
+                           Cells(rCell.Row, j).Select
+                           Selection.Interior.Color = vbRed
+                           CHECK_CHAR_FLAG = True
+            '               MsgBox "Er zijn te lange teksten aanwezig. Svp. aanpassen."
+                        Else
+            '               Cells(rCell.Row, j).Select
+                           If Selection.Interior.Color = vbYellow Then
+                              CHECK_CHAR_FLAG = True
+                           Cells(3, j) = Len(Cells(rCell.Row, j))
+                           Else
+                              Selection.Interior.Color = xlNone
+                           End If
+                        End If
+                        
+            '            Cells(3, j) = Cells(3, j) & vbNewLine & "{RIJ " & rCell.Row & " } " & "Geteld: " & Len(Cells(rCell.Row, j)) & " (Toegestaan: " & charRange(hCell.Row - 1, 1).Value & " ) "
+            '            Cells(3, j) = Cells(3, j) & vbNewLine & "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
+                        Test_Col_Char = Cells(3, j) & "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
+                        Cells(3, j) = Test_Col_Char & vbNewLine ''& "{RIJ " & rCell.Row & " } " & "Char." & Len(Cells(rCell.Row, j)) & " van " & charRange(hCell.Row - 1, 1).Value & ") "
+                     End If
+            ''''''''''''
+            ''''''''''''
       Else
       End If
 End If
@@ -345,7 +337,6 @@ Next hCell
 '         Column_Name_Werkbestand_CHECK = Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Cells(4, j)
 ''''''''''''''
 ''''''''''''''
-
 Match_Check_OK:
 Match_Check = False
 ''''''''''''''
@@ -369,9 +360,7 @@ End If
 '     rCell = (rCell.Row + 1)
 'Next rCell
 
-
-
-''Controle hoeveel regels zijn er om over te zetten naar Accordering
+'Controle hoeveel regels zijn er om over te zetten naar Accordering
         If Application.WorksheetFunction.CountIf(statusRange, Aanvraag_level_60) > 0 Then
            GoTo COPY
         Else
@@ -379,16 +368,9 @@ End If
            Exit Sub
         End If
 COPY:
-'''''''
-SpeedOff
-SpeedOn
-'''''''
-''========================================================================''
-''========================================================================''
-''========================================================================''
-''========================================================================''
-''========================================================================''
-''========================================================================''
+
+Call SpeedOff
+Call SpeedOn
 ''========================================================================''
 ''========================================================================''
 COPY_START:
@@ -396,25 +378,17 @@ COPY_START:
            Range(Cells(rCell.Row, 1), Cells(rCell.Row, HeaderNameColumn)).COPY Destination:=Workbooks("Artikelbeheer").Worksheets("Accordering").Cells(mylastRow_Accordering + 1, 1)
 ''========================================================================''
 ''========================================================================''
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 CHECK_CHAR_GESLAAGD:
 '          Controle van velden is al gedaan
            statusRange(rCell.Row - HeadingRows, 1).Value = Aanvraag_level_49 ''"DB_OUT"    overschrijven waarde  Aanvraag_level_60
           'Define OUT laast row   '3 regels zijn leeg dus let op ".UsedRange.Rows.Count" telt alleen NonEempty regels
            mylastRow_Accordering = mylastRow_Accordering + 1
-'COPY:
-'''''''''
-'SpeedOff
-'SpeedOn
-'''''''''
         Else
         End If
 ''========================================================================''
 CHECK_OVER:
     rCell = (rCell.Row + 1)
-'SpeedOff
 Next rCell
-''===============================||====================================
 ''===============================||====================================
 ''===============================||====================================
    Workbooks("Artikelbeheer").Worksheets("Accordering").Activate
@@ -449,6 +423,3 @@ COPY_END1:
    End If
 ''===============================||====================================
 End Sub
-
-
-
