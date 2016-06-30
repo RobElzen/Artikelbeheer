@@ -1,4 +1,4 @@
-Attribute VB_Name = "M10d_Copy_DATA_to_Accordering"
+''Attribute VB_Name = "M10d_Copy_DATA_to_Accordering"
 'Aanroep vanuit "Databestand"
 Sub copy_DATA_to_Accordering()
     Set Network = CreateObject("wscript.network")
@@ -43,7 +43,7 @@ Sub copy_DATA_to_Accordering()
     If wbCheck = False Then
        Dim xlApp As Excel.Application
        Dim strFile As String
-           strFile = Path & "/" & "Artikelbeheer.xlsm"
+           strFile = ThisWorkbook.Path & "/" & "Artikelbeheer.xlsm"
         
        If Workbooks.CanCheckOut(strFile) = True Then
           Application.Workbooks.Open strFile
@@ -135,17 +135,17 @@ CHECK_START:
                       Cells(rCell.Row, Range("DB_Aanvrager.Vestiging").Column) = Vestiging
                       Cells(rCell.Row, Range("DB_Aanvrager.Afdeling").Column) = Afdeling
                         ''========================================================================''
-                        CHECK_CHAR_START:   ''check aantal karakters als check aanwezig in kolom 3
+CHECK_CHAR_START:                           ''check aantal karakters als check aanwezig in kolom 3
                         '    Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Activate
                             j = 0
                             Dim CHECK_REQU_FLAG As Boolean
                             Dim CHECK_FORM_FLAG As Boolean
                             Dim CHECK_CHAR_FLAG As Boolean
-                           'Dim CHECK_EMPTY_FLAG As Boolean                            
+                           'Dim CHECK_EMPTY_FLAG As Boolean
                             CHECK_REQU_FLAG = False
                             CHECK_FORM_FLAG = False
                             CHECK_CHAR_FLAG = False
-                           'CHECK_EMPTY_FLAG = False 
+                           'CHECK_EMPTY_FLAG = False
                         ''========================================================================''
                         ''Check op lege cellen (+1   betekent incl. Heading) || Workbooks(Werkbestand_naam).Worksheets("Werkbestand").
                             Dim requRange As Range
@@ -173,7 +173,7 @@ CHECK_START:
                  Workbooks(Databestand_naam).Worksheets("Databestand").Cells(rCell.Row, j).Select
                  Match_Check = True
             ''''''''''''
-            COL_REQUIRED:
+COL_REQUIRED:
                      If requRange(hCell.Row - 1, 1).Value = "X" Then    ''Required field
                      
             '              Cells(rCell.Row, j).Select
@@ -188,7 +188,7 @@ CHECK_START:
                         End If
                      End If
             ''''''''''''
-            COL_FORMAT:
+COL_FORMAT:
                      If formRange(hCell.Row - 1, 1).Value = "T" Then    ''Text
                         Selection.NumberFormat = "General"
             '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Cells(rCell.Row, j).NumberFormat = "General"
@@ -285,12 +285,12 @@ CHECK_START:
                      End If
                     
                      If formRange(hCell.Row - 1, 1).Value = "V" Then    ''Valuta
-                        Selection.NumberFormat = "* #,##0.00"
+                        Selection.NumberFormat = "?* #,##0.00"
             '            Workbooks(Werkbestand_naam).Worksheets("Werkbestand").Selection.NumberFormat = "#,##0.00"
                      GoTo COL_CHAR
                      End If
             ''''''''''''
-            COL_CHAR:
+COL_CHAR:
                      If charRange(hCell.Row - 1, 1).Value > 0 Then
                      
                         If Len(Cells(rCell.Row, j)) > charRange(hCell.Row - 1, 1).Value Then
@@ -393,7 +393,7 @@ Next rCell
 ''===============================||====================================
    Workbooks("Artikelbeheer").Worksheets("Accordering").Activate
    Workbooks("Artikelbeheer").Worksheets("Accordering").Select
-   strFile = Path & "/" & ActiveWorkbook.Name
+   strFile = ThisWorkbook.Path & "/" & ActiveWorkbook.Name
 '''
    Application.Run ("'Lijsten_new.xlsm'!ProtectOnALL")
    Application.Run ("'Lijsten_new.xlsm'!Generate_Ranges_ALL")
