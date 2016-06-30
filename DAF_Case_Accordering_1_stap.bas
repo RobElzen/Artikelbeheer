@@ -1,7 +1,6 @@
 Attribute VB_Name = "DAF_Case_Accordering_1_stap"
 
-
-'Çode wort gebruikt alleen bij werkblad "Accordering"
+'Ã‡ode wort gebruikt alleen bij werkblad "Accordering"
 'Alleen door Accorderdeers te gebruiken
 'Rechten toekenning van toepassing
 
@@ -16,7 +15,6 @@ Set wbA = Workbooks("Artikelbeheer.xlsm")
 Set ws = Worksheets("Accordering")
 
 Dim Accoordcode_new As String
-
 Dim Acc_Range As Range
 ''***********************
     Accoordcode_new = ActiveCell.Value
@@ -40,14 +38,14 @@ If Not Intersect(ActiveCell, Acc_Range) Is Nothing And _
         Else
         End If
 Else
-Dim Aanvraagcode_new As String
-Dim Aanvraagcode_old As String
+      Dim Aanvraagcode_new As String
+     Dim Aanvraagcode_old As String
     
-    Application.EnableEvents = False
-    Aanvraagcode_new = ActiveCell.Value
-    Application.Undo
-    Aanvraagcode_old = ActiveCell.Value
-    Application.EnableEvents = True
+     Application.EnableEvents = False
+     Aanvraagcode_new = ActiveCell.Value
+     Application.Undo
+     Aanvraagcode_old = ActiveCell.Value
+     Application.EnableEvents = True
 End If
 
 'Door Inkoop contract gekoppeld
