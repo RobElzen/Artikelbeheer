@@ -39,7 +39,7 @@ Public Const Aanvraag_level_74 As String = "OUT_inleveren"
 Public Const Aanvraag_level_77 As String = "OUT_afgewezen"
 Public Const Aanvraag_level_79 As String = "OUT_OUT"
 
-
+ughkh;
 Public Const Aanvraag_level_80 As String = "MMP_IN"
 Public Const Aanvraag_level_81 As String = "MMP_voorbereiden_SAP_data"
 Public Const Aanvraag_level_82 As String = "MMP_rapportage_doorlooptijd"
