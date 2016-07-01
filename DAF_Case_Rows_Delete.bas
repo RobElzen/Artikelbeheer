@@ -4,19 +4,7 @@ Dim CellStatusReversed As String
 Dim CellStatus As String
 Dim answer As Integer
 
-If ActiveWorkbook.Name = "Lijsten_new.xlsm" Then Exit Sub
-answer = MsgBox("Are you sure you want to delete completed rows?", vbYesNo + vbQuestion, "Empty Sheet")
-If answer = vbYes Then
-
-    For Each Worksheet In ActiveWorkbook.Worksheets
-       Application.Run ("'Lijsten_new.xlsm'!Affix_Case")
-       Dim Pcell As Variant
-       For Each Pcell In Range(Affix & "Aanvraag.code")
-       
-           CellStatusReversed = Left(StrReverse(Pcell), 3)
-           CellStatus = Left(StrReverse(CellStatusReversed), 3)
-              
-           If CellStatus = "OUT" Then
+If ActiveWork
               Pcell.Select
               Pcell.EntireRow.Select
               Pcell.EntireRow.Delete
